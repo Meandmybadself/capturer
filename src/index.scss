@@ -43,7 +43,15 @@ div#app {
         padding: 5px;
     }
     input {
+        &:focus {
+            outline: none;
+        }
         width: 100%;
+        &#regexInput {
+            &.invalid {
+                border-color: red;
+            }
+        }
     }
     textarea {
         resize: none;
