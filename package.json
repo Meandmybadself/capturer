@@ -1,0 +1,52 @@
+{
+  "name": "react-ts-scss-boilerplate",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "precommit": "lint-staged",
+    "dev": "parcel serve src/index.html --open",
+    "build": "rm -rf public & parcel build src/index.html --out-dir public --no-source-maps"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "xo": {
+    "extends": [
+      "prettier"
+    ],
+    "ignore": [
+      "node_modules/**/*.*"
+    ],
+    "rules": {
+      "@typescript-eslint/no-unsafe-member-access": 0,
+      "@typescript-eslint/no-unsafe-call": 0
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "xo --fix",
+      "npm run lint",
+      "prettier --write"
+    ],
+    "*.css": [
+      "prettier --write"
+    ]
+  },
+  "dependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.2.1",
+    "@types/react": "^17.0.6",
+    "eslint-config-prettier": "^8.3.0",
+    "husky": "^6.0.0",
+    "lint-staged": "^11.0.0",
+    "parcel": "^2.2.1",
+    "prettier": "^2.3.0",
+    "sass": "^1.34.0",
+    "typescript": "^4.2.4",
+    "xo": "^0.40.1"
+  }
+}
