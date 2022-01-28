@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { useLocalStorage } from '../hooks/useLocalStorage'
 
 const App: React.FunctionComponent = () => {
-    const [regex, setRegex] = useLocalStorage('regex', '')
-    const [corpus, setCorpus] = useLocalStorage('corpus', '')
+
+    const [regex, setRegex] = useLocalStorage('regex', '([a-z]+)')
+    const [corpus, setCorpus] = useLocalStorage('corpus', 'This is an example of a phone number: (415) 555-1212.  This is an UPPERCASED WORD.  This is a list of numbers, separated by commas: 1,12,44,16')
     const [output, setOutput] = useState<string>('')
     const [matchCount, setMatchCount] = useState<number>(0)
 
@@ -34,8 +35,8 @@ const App: React.FunctionComponent = () => {
 
     return (<div id='app'>
         <header>
-            <h1>Capture Capturer</h1>
-            <p>Return only the values in capture groups.</p>
+            <h1>C(aptu)re Capt(urer)</h1>
+            <p>Return only the values found in regex capture groups.</p>
             <p>To use, input a regular expression with capture groups and provide input.</p>
         </header>
         <div id='regex'>
