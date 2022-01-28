@@ -2,11 +2,10 @@
   "name": "react-ts-scss-boilerplate",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
     "precommit": "lint-staged",
     "dev": "parcel serve src/index.html --open",
-    "build": "rm -rf public & parcel build src/index.html --out-dir public --no-source-maps"
+    "build": "rm -rf public & parcel build src/index.html --dist-dir public --no-source-maps"
   },
   "keywords": [],
   "author": "",
@@ -34,6 +33,7 @@
     ]
   },
   "dependencies": {
+    "classnames": "^2.3.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },
