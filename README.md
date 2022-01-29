@@ -1,11 +1,5 @@
-# React + TypeScript + SASS boilerplate
+# Capturer Capturer
 
-## Overview
-Bare-bones setup for your quick React project.
+Uses regular expression capture groups to identify & collect content
 
-## Components
-* React
-* [Parcel Bundler](https://parceljs.org)
-* SASS
-* [lint-staged](https://www.npmjs.com/package/lint-staged)
-* TypeScript
+https://capturegroups.netlify.app

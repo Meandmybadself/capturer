@@ -2,6 +2,13 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { useLocalStorage } from './hooks/useLocalStorage'
 import cn from 'classnames'
 import { useDebounce } from './hooks/useDebounce'
+import { xor } from 'lodash/xor'
+
+const REGEXFLAG = {
+    GLOBAL: 'global',
+    CASEINSENSITIVE: 'caseinsensitive',
+    MULTILINE: 'multiline',
+}
 
 function compute(computation, ...message) {
     const delegate = () => {
@@ -49,6 +56,12 @@ const App: React.FunctionComponent = () => {
     const [output, setOutput] = useState<string>('')
     const [matchCount, setMatchCount] = useState<number>(0)
     const [regexClassname, setRegexClassname] = useState('')
+    const [regexFlags, setRegexFlags] = useState([])
+
+    const toggleRegexFlag = useCallback((flag) => {
+        let newRegexFlags = xor(regexFlags, [flag])
+        setRegexFlags(newRegexFlags)
+    }, [regexFlags])
 
     const computeRegex = useCallback(async () => {
         const data: any = await compute(getCaptureGroups, { regex: debouncedRegex, corpus: debouncedCorpus })
@@ -78,7 +91,13 @@ const App: React.FunctionComponent = () => {
                 <span>Regular Expression</span>
                 <input className={cn(regexClassname)} type='text' id='regexInput' name='regexInput' value={regex} onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => setRegex(e.target.value)} />
             </label>
+            <div id='regex-opts'>
+                <button className={cn({ 'active': regexFlags.includes(REGEXFLAG.CASEINSENSITIVE) })} onClick={() => toggleRegexFlag(REGEXFLAG.CASEINSENSITIVE)}>Case-insensitive</button>
+                <button className={cn({ 'active': regexFlags.includes(REGEXFLAG.GLOBAL) })} onClick={() => toggleRegexFlag(REGEXFLAG.GLOBAL)}>Global</button>
+                <button className={cn({ 'active': regexFlags.includes(REGEXFLAG.MULTILINE) })} onClick={() => toggleRegexFlag(REGEXFLAG.MULTILINE)}>Multiline</button>
+            </div>
         </div>
+
         <div id='corpus'>
             <label>
                 <span>Input Text</span>
@@ -93,6 +112,9 @@ const App: React.FunctionComponent = () => {
                 <textarea value={output} readOnly />
             </label>
         </div>
+        <footer>
+            <a href='https://github.com/Meandmybadself/captures'>Source</a>
+        </footer>
     </div>)
 }
 

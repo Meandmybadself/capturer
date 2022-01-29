@@ -5,7 +5,7 @@
   "scripts": {
     "precommit": "lint-staged",
     "dev": "parcel serve src/index.html --open",
-    "build": "rm -rf public & parcel build src/index.html --dist-dir public --no-source-maps"
+    "build": "rm -rf dist & parcel build src/index.html --dist-dir dist --no-source-maps"
   },
   "keywords": [],
   "author": "",
@@ -34,6 +34,7 @@
   },
   "dependencies": {
     "classnames": "^2.3.1",
+    "lodash": "^4.17.21",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },
