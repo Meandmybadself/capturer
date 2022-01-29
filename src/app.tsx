@@ -51,7 +51,7 @@ function getCaptureGroups({ regex, corpus, regexFlags }) {
 const App: React.FunctionComponent = () => {
     const [regex, setRegex] = useLocalStorage('regex', '([a-z]+)')
     const debouncedRegex = useDebounce(regex, 500)
-    const [corpus, setCorpus] = useLocalStorage('corpus', 'This is an example of a phone number: (415) 555-1212.  This is an UPPERCASED WORD.  This is a list of numbers, separated by commas: 1,12,44,16')
+    const [corpus, setCorpus] = useLocalStorage('corpus', 'This is an example of a phone number: (415) 555-1212.  This is an UPPERCASED WORD.  This is a list of numbers, separated by commas: 1,12,44,16.  This?  Oh, just a very large number 525,600.  Here is Some Titlecased Content for You. Here is <span>some content in between HTML tags</span>. Here are some emojis: 🚀 🍔 😼.  Here is some Cyrillic text: Ай вил юз Рашен Сириллик.  Here is some Chinese text: 你好，世界！')
     const debouncedCorpus = useDebounce(corpus, 500)
     const [output, setOutput] = useState<string>('')
     const [matchCount, setMatchCount] = useState<number>(0)
@@ -75,14 +75,13 @@ const App: React.FunctionComponent = () => {
             computeRegex()
             setRegexClassname('')
         } catch (e) {
-            console.log('invalid regex')
             setRegexClassname('invalid')
         }
     }, [debouncedCorpus, debouncedRegex, regexFlags])
 
     return (<div id='app'>
         <header>
-            <h1>C(aptu)re Capt(urer)</h1>
+            <h1>The Capturer</h1>
             <p>
                 Return only the values found in regex capture groups.<br />
                 To use, input a regular expression with capture groups and provide input.
