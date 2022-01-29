@@ -114,7 +114,7 @@ const App: React.FunctionComponent = () => {
             </label>
         </div>
         <footer>
-            <a href='https://github.com/Meandmybadself/captures'>Source</a>
+            <a href='https://github.com/Meandmybadself/capturer'>Source</a>
         </footer>
     </div>)
 }
