@@ -102,7 +102,7 @@ const App: React.FunctionComponent = () => {
         <div id='corpus'>
             <label>
                 <span>Input Text</span>
-                <textarea value={corpus} onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => setCorpus(e.target.value)} />
+                <textarea value={corpus} autoFocus onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => setCorpus(e.target.value)} />
             </label>
         </div>
         <div id='output'>
