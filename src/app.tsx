@@ -2,12 +2,12 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { useLocalStorage } from './hooks/useLocalStorage'
 import cn from 'classnames'
 import { useDebounce } from './hooks/useDebounce'
-import { xor } from 'lodash/xor'
+import xor from 'lodash/xor'
 
 const REGEXFLAG = {
-    GLOBAL: 'global',
-    CASEINSENSITIVE: 'caseinsensitive',
-    MULTILINE: 'multiline',
+    GLOBAL: 'g',
+    CASEINSENSITIVE: 'i',
+    MULTILINE: 'm',
 }
 
 function compute(computation, ...message) {
@@ -33,8 +33,8 @@ function compute(computation, ...message) {
     });
 }
 
-function getCaptureGroups({ regex, corpus }) {
-    const re = new RegExp(regex, 'gm')
+function getCaptureGroups({ regex, corpus, regexFlags }) {
+    const re = new RegExp(regex, regexFlags.join(''));
 
     let output = ""
     let matches
@@ -56,7 +56,7 @@ const App: React.FunctionComponent = () => {
     const [output, setOutput] = useState<string>('')
     const [matchCount, setMatchCount] = useState<number>(0)
     const [regexClassname, setRegexClassname] = useState('')
-    const [regexFlags, setRegexFlags] = useState([])
+    const [regexFlags, setRegexFlags] = useLocalStorage('regexflags', ['g', 'i', 'm'])
 
     const toggleRegexFlag = useCallback((flag) => {
         let newRegexFlags = xor(regexFlags, [flag])
@@ -64,27 +64,29 @@ const App: React.FunctionComponent = () => {
     }, [regexFlags])
 
     const computeRegex = useCallback(async () => {
-        const data: any = await compute(getCaptureGroups, { regex: debouncedRegex, corpus: debouncedCorpus })
+        const data: any = await compute(getCaptureGroups, { regex: debouncedRegex, corpus: debouncedCorpus, regexFlags })
         setOutput(data.output)
         setMatchCount(data.matchCount)
-    }, [debouncedRegex, debouncedCorpus])
+    }, [debouncedRegex, debouncedCorpus, regexFlags])
 
     useEffect(() => {
         try {
-            new RegExp(regex, 'gm')
+            new RegExp(regex, regexFlags.join(''))
             computeRegex()
             setRegexClassname('')
         } catch (e) {
             console.log('invalid regex')
             setRegexClassname('invalid')
         }
-    }, [debouncedCorpus, debouncedRegex])
+    }, [debouncedCorpus, debouncedRegex, regexFlags])
 
     return (<div id='app'>
         <header>
             <h1>C(aptu)re Capt(urer)</h1>
-            <p>Return only the values found in regex capture groups.</p>
-            <p>To use, input a regular expression with capture groups and provide input.</p>
+            <p>
+                Return only the values found in regex capture groups.<br />
+                To use, input a regular expression with capture groups and provide input.
+            </p>
         </header>
         <div id='regex'>
             <label>
