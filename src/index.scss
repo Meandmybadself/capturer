@@ -21,8 +21,13 @@ body,
 }
 
 #app {
-    max-width: 1400px;
+    width: 100%;
+    padding: 0 50px;
     margin: 0 auto;
+}
+
+h1 {
+    font-size: 2.5rem;
 }
 
 label {
@@ -39,7 +44,7 @@ div#app {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     display: grid;
-    grid-template-rows: 125px 75px 1fr 30px;
+    grid-template-rows: auto 75px 1fr 30px;
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 30px;
     input,
