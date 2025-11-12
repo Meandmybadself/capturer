@@ -10,10 +10,10 @@ const REGEXFLAG = {
     MULTILINE: 'm',
 }
 
-function compute(computation, ...message) {
+function compute(computation: Function, ...message: any[]): Promise<any> {
     const delegate = () => {
-        onmessage = ({ data: { computation, message } }) => {
-            const wrapper = (fn) => Function('return (' + fn.toString() + ')')();
+        onmessage = ({ data: { computation, message } }: any) => {
+            const wrapper = (fn: Function) => Function('return (' + fn.toString() + ')')();
             const result = wrapper(computation)(...message);
             postMessage(result);
         };
@@ -33,7 +33,13 @@ function compute(computation, ...message) {
     });
 }
 
-function getCaptureGroups({ regex, corpus, regexFlags }) {
+interface GetCaptureGroupsParams {
+    regex: string;
+    corpus: string;
+    regexFlags: string[];
+}
+
+function getCaptureGroups({ regex, corpus, regexFlags }: GetCaptureGroupsParams) {
     const re = new RegExp(regex, regexFlags.join(''));
 
     let output = ""
@@ -58,7 +64,7 @@ const App: React.FunctionComponent = () => {
     const [regexClassname, setRegexClassname] = useState('')
     const [regexFlags, setRegexFlags] = useLocalStorage('regexflags', ['g', 'i', 'm'])
 
-    const toggleRegexFlag = useCallback((flag) => {
+    const toggleRegexFlag = useCallback((flag: string) => {
         let newRegexFlags = xor(regexFlags, [flag])
         setRegexFlags(newRegexFlags)
     }, [regexFlags])

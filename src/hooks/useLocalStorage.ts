@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 // Hook
-export const useLocalStorage = (key: string, initialValue: any) => {
+export const useLocalStorage = <T>(key: string, initialValue: T): [T, (value: T | ((val: T) => T)) => void] => {
     const [storedValue, setStoredValue] = useState<T>(() => {
         try {
             // Get from local storage by key
@@ -15,7 +15,7 @@ export const useLocalStorage = (key: string, initialValue: any) => {
         }
     });
 
-    const setValue = (value: any) => {
+    const setValue = (value: T | ((val: T) => T)) => {
         try {
             const valueToStore =
                 value instanceof Function ? value(storedValue) : value;
